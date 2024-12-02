@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtraction Flash Cards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        .flashcard {
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        .question {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .answer-input {
+            font-size: 1.5em;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .feedback {
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Subtraction Flash Cards</h1>
+    <p>Test your knowledge of subtraction!</p>
+
+    <div class="flashcard">
+        <div class="question" id="question">Loading...</div>
+        <input type="number" id="answerInput" class="answer-input" placeholder="Enter your answer" />
+        <button class="button" id="submitButton">Submit</button>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        // List of subtraction numbers to be used (1-12)
+        const minNum = 1;
+        const maxNum = 12;
+
+        let currentQuestion = { num1: 0, num2: 0, correctAnswer: 0 };
+
+        // Generate a new question
+        function generateQuestion() {
+            // Random numbers between 1 and 12 for subtraction
+            currentQuestion.num1 = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+            currentQuestion.num2 = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+            
+            // Ensure num1 is greater than or equal to num2 for non-negative answers
+            if (currentQuestion.num1 < currentQuestion.num2) {
+                [currentQuestion.num1, currentQuestion.num2] = [currentQuestion.num2, currentQuestion.num1];
+            }
+
+            currentQuestion.correctAnswer = currentQuestion.num1 - currentQuestion.num2;
+
+            // Display the question
+            document.getElementById('question').textContent = `${currentQuestion.num1} - ${currentQuestion.num2} = ?`;
+            document.getElementById('answerInput').value = '';
+            document.getElementById('feedback').textContent = '';
+        }
+
+        // Check the answer
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answerInput').value);
+            if (userAnswer === currentQuestion.correctAnswer) {
+                document.getElementById('feedback').textContent = 'Correct! Well done.';
+                document.getElementById('feedback').style.color = 'green';
+                setTimeout(generateQuestion, 1000); // New question after a short delay
+            } else {
+                document.getElementById('feedback').textContent = 'Oops! Try again.';
+                document.getElementById('feedback').style.color = 'red';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('submitButton').addEventListener('click', checkAnswer);
+
+        // Initialize first question
+        generateQuestion();
+    </script>
+
+</body>
+</html>
