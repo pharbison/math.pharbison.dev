@@ -10,40 +10,59 @@
             text-align: center;
             background-color: #f4f4f9;
             padding: 20px;
+            margin: 0;
         }
         h1 {
             color: #333;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 50px;
-        }
-        .button {
-            padding: 20px 40px;
-            font-size: 1.5em;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 200px;
-        }
-        .button:hover {
-            background-color: #45a049;
+            font-size: 2.5em;
+            margin-bottom: 20px;
         }
         .description {
             font-size: 1.2em;
             margin-top: 20px;
             color: #555;
         }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 220px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .button {
+                width: 180px;
+                font-size: 1em;
+                padding: 12px 25px;
+            }
+            .description {
+                font-size: 1em;
+            }
+        }
     </style>
 </head>
 <body>
 
     <h1>Welcome to Math Flash Cards</h1>
-    <p class="description">Choose a flashcard game to test your multiplication or division skills!</p>
+    <p class="description">Choose a flashcard game to test your math skills!</p>
 
     <div class="button-container">
         <a href="multiplication.html" target="_blank">
@@ -52,10 +71,15 @@
         <a href="division.html" target="_blank">
             <button class="button">Division</button>
         </a>
+        <a href="addition.html" target="_blank">
+            <button class="button">Addition</button>
+        </a>
+        <a href="subtraction.html" target="_blank">
+            <button class="button">Subtraction</button>
+        </a>
     </div>
 
-    <p class="description">Click on one of the buttons to open a new flashcard game in a new tab.</p>
+    <p class="description">Click on one of the buttons to open a flashcard game in a new tab and start practicing!</p>
 
 </body>
 </html>
-
