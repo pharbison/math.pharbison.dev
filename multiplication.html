@@ -4,74 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multiplication Flash Cards</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f9;
-            padding: 20px;
-        }
-        .flashcard {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .question {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        .answer-input {
-            font-size: 1.5em;
-            padding: 10px;
-            width: 80%;
-            max-width: 300px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 1.2em;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button-reset {
-            padding: 10px 20px;
-            background-color: #4c66af;
-            color: white;
-            font-size: 1.2em;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-        .feedback {
-            font-size: 1.5em;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .counter {
-            font-size: 1.5em;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="app.css" />
 </head>
 <body>
 
     <h1>Multiplication Flash Cards</h1>
     <p>Test your knowledge of multiplication tables!</p>
-    <button class="button-reset" id="reset-counters">Reset Counters</button>
+    <button class="button-reset" id="resetCounters">Reset Counters</button>
     <div class="counter" id="counter">Correct: 0 | Incorrect: 0</div>
     <div class="flashcard" id="flashcard">
         <div class="question" id="question">Loading...</div>
@@ -79,7 +18,7 @@
         <button class="button" id="submitButton">Submit</button>
         <div class="feedback" id="feedback"></div>
     </div>
-
+    <script src="app.js"></script>
     <script>
         // List of multiplication tables to be used (1-12)
         const minNum = 1;
@@ -99,89 +38,6 @@
             document.getElementById('answerInput').value = '';
             document.getElementById('feedback').textContent = '';
         }
-
-        // Check the answer
-        function checkAnswer() {
-            const userAnswer = parseInt(document.getElementById('answerInput').value);
-            if (userAnswer === currentQuestion.correctAnswer) {
-                document.getElementById('feedback').textContent = 'Correct! Well done.';
-                document.getElementById('feedback').style.color = 'green';
-                setTimeout(generateQuestion, 1000); // New question after a short delay
-            } else {
-                document.getElementById('feedback').textContent = 'Oops! Try again.';
-                document.getElementById('feedback').style.color = 'red';
-            }
-        }
-
-        // Helper functions to manage cookies
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
-        }
-
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i].trim();
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        function incrementCookie(name) {
-            let value = parseInt(getCookie(name)) || 0;
-            value++;
-            setCookie(name, value, 7); // Cookie lasts for 7 days
-        }
-
-        function resetCounters() {
-            setCookie('correctCounter', 0, 7);
-            setCookie('incorrectCounter', 0, 7);
-            updateDisplay();
-        }
-
-        function updateDisplay() {
-            const correct = getCookie('correctCounter') || 0;
-            const incorrect = getCookie('incorrectCounter') || 0;
-            document.getElementById('counter').innerText = `Correct: ${correct} | Incorrect: ${incorrect}`;
-        }
-
-        // Example integration with your webpage logic
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize counters if not already set
-            if (!getCookie('correctCounter')) setCookie('correctCounter', 0, 7);
-            if (!getCookie('incorrectCounter')) setCookie('incorrectCounter', 0, 7);
-
-            updateDisplay(); // Update the displayed counters
-
-            // Assuming there is a form or button to check answers
-            document.getElementById('submitButton').addEventListener('click', () => {
-                const userAnswer = parseInt(document.getElementById('answerInput').value);
-
-                if (userAnswer === currentQuestion.correctAnswer) {
-                    incrementCookie('correctCounter');
-                } else {
-                    incrementCookie('incorrectCounter');
-                }
-                updateDisplay();
-            });
-
-            // Allow using the Enter key to submit the answer
-            document.getElementById('answerInput').addEventListener('keypress', (event) => {
-                if (event.key === 'Enter') {
-                    document.getElementById('submitButton').click();
-                }
-            });
-
-            // Reset button logic
-            document.getElementById('reset-counters').addEventListener('click', resetCounters);
-        });
-
-        // Event listeners
-        document.getElementById('submitButton').addEventListener('click', checkAnswer);
 
         // Initialize first question
         generateQuestion();
